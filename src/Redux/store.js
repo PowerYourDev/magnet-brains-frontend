@@ -6,7 +6,9 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 
-import userSlice from "./sliceReducer/userSlice"
+import userSlice from "./sliceReducers/userSlice"
+
+
 
 
 

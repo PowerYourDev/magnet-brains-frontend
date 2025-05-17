@@ -1,6 +1,6 @@
 
 import { createSlice } from '@reduxjs/toolkit';
-import {userSignin,userLogOut,userSingUp} from "../reduxThunk/userThunk"
+import {userSignin,userLogOut,userSingUp,getAllusers} from "../reduxThunk/userThunk"
 
 
 
@@ -10,6 +10,7 @@ const userSlice = createSlice({
   initialState: {
     data: null,
     loading: false,
+    users:null,
     error: null,
   },
   reducers: {},
@@ -41,6 +42,21 @@ const userSlice = createSlice({
       })
      
       .addCase(userSingUp.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getAllusers.pending, (state) => {
+        state.loading = true;
+      })
+
+      .addCase(getAllusers.fulfilled, (state, action) => {
+        state.loading = false;
+        state. users= action.payload.data.data;
+        state.error = null;
+      })
+     
+      .addCase(getAllusers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

@@ -1,8 +1,10 @@
 import React from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Login from "./Auth/login"
+import Login from "./Auth/Login"
 import SingUp from "./Auth/SingUp"
-// import ProtectedRouter from "./ProtectedRouter"
+
+import MainPage from "./Pages/MainPage"
+import ProtectedRouter from "./ProtectedRouter"
 
 import { ToastContainer } from "react-toastify"
 import { Suspense } from "react"
@@ -21,8 +23,8 @@ function App() {
 
     
 
-    {/* <Route element={<ProtectedRouter/>}>
-
+    <Route element={<ProtectedRouter/>}>
+    <Route path="/main-page" element={<MainPage/>}/>
 
      
 
@@ -32,7 +34,7 @@ function App() {
 
 
   
-    </Route> */}
+    </Route>
    </Routes>
  
    {/* </Suspense> */}

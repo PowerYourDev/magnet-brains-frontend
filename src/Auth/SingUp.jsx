@@ -1,17 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { userSingUp } from '../Redux/reduxThunk/userThunk';
+
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+
 
 const SignupForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user= useSelector((store)=>store?.userSlice?.data)
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log('Form Submitted:', data);
-    // Add your API call here
+  const onSubmit = async (data) => {
+    const response = await dispatch(userSingUp(data));
+    console.log(response);
+
+    if (response.payload.status == 200) {
+        navigate("/main-page")
+         toast.success("login successfull");
+       } else {
+         const errorMessage = response.payload?.response?.data?.message;
+   
+         if (errorMessage) {
+           toast.error(errorMessage); // Show the custom error message from the response
+         } else {
+           toast.error("Something went wrong. Please try again."); // Default error message
+         }
+       }
   };
+
+  const handleSingIn=()=>{
+    navigate("/")
+  }
+
+   useEffect(() => {
+      if (user) {
+        navigate("/main-page");
+      }
+    });
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -82,8 +116,8 @@ const SignupForm = () => {
             } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           >
             <option value="">Select role</option>
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
           </select>
           {errors.role && <p className="text-red-500 text-sm mt-1">{errors.role.message}</p>}
         </div>
@@ -94,6 +128,16 @@ const SignupForm = () => {
         >
           Sign Up
         </button>
+
+        <p className="font-normal text-base mt-3 text-center">
+                  Already registered?{" "}
+                  <u
+                    onClick={handleSingIn}
+                    className="font-medium  cursor-pointer"
+                  >
+                    Sign In
+                  </u>{" "}
+                </p>
       </form>
     </div>
   );

@@ -34,6 +34,19 @@ export const userSignin = createAsyncThunk(
     }
   })
 
+  export const getAllusers=createAsyncThunk('user/get-all-users',async(formData,{rejectWithValue})=>{
+    try{
+       const response = await axios.get(`${BASE_URL}/api/auth/get-all-users`,{withCredentials:true})
+       return response
+    }catch(error){
+      console.log(error)
+      return rejectWithValue(error);
+
+    }
+  })
+
+
+
   export const userLogOut=createAsyncThunk('auth/logout',async(_,{rejectWithValue})=>{
     try{
         const response=await axios.post(`${BASE_URL}/api/auth/logout`,{}, { withCredentials: true })
