@@ -1,7 +1,7 @@
 import React from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Login from "./Auth/Login"
-import SingUp from "./Auth/SingUp"
+import Login from "./Auth/Login.jsx"
+import SingUp from "./Auth/SingUp.jsx"
 
 import MainPage from "./Pages/MainPage"
 import Dashboard from "./Pages/Dashboard"
