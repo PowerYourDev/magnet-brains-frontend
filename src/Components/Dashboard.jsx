@@ -10,6 +10,8 @@ const TaskBoard = ({ setPage, data, totalTasks, limit, page, refetchTasks}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log(BASE_URL)
+
   const totalPages = Math.ceil(totalTasks / limit);
 
   const [columns, setColumns] = useState({
