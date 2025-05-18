@@ -4,6 +4,10 @@ import Login from "./Auth/Login"
 import SingUp from "./Auth/SingUp"
 
 import MainPage from "./Pages/MainPage"
+import Dashboard from "./Pages/Dashboard"
+import TaskEdit from "./Pages/TaskEdit"
+import MyTasks from "./Pages/MyTasks"
+
 import ProtectedRouter from "./ProtectedRouter"
 
 import { ToastContainer } from "react-toastify"
@@ -24,7 +28,13 @@ function App() {
     
 
     <Route element={<ProtectedRouter/>}>
-    <Route path="/main-page" element={<MainPage/>}/>
+    <Route path="/task-create" element={<MainPage/>}/>
+    <Route path="/dashboard" element={<Dashboard/>}/>
+    <Route path="/task-edit/:id" element={<TaskEdit/>}/>
+    <Route path="/my-tasks" element={<MyTasks/>}/>
+
+
+
 
      
 

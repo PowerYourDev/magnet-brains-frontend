@@ -24,7 +24,7 @@ const Login = () => {
     console.log(response);
 
     if (response.payload.status == 200) {
-     navigate("/main-page")
+     navigate("/dashboard")
       toast.success("login successfull");
     } else {
       const errorMessage = response.payload?.response?.data?.message;
@@ -43,7 +43,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/main-page");
+      navigate("/dashboard");
     }
   });
 

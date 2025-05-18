@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../utilis/constant";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+
+import Header from "../../Components/Header";
 
 const TaskForm = () => {
     const dispatch=useDispatch()
-    const navigate=useNavigate()
+    // const navigate=useNavigate()
     const users= useSelector((store)=>store?.userSlice?.users)
 
   const {
@@ -24,7 +26,7 @@ const TaskForm = () => {
       const response = await axios.post(`${BASE_URL}/api/task/admin/create`, data,  { withCredentials: true });
       console.log(response) 
        if (response.status == 201) {
-           navigate("/main-page")
+        
             toast.success("task saved succesfully successfull");
             reset()
           } 
@@ -44,6 +46,9 @@ const TaskForm = () => {
   },[])
 
   return (
+    <div className="h-screen flex flex-col">
+        <Header/>
+    
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form onSubmit={handleSubmit(onSubmit)}     className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
       <h2 className="text-2xl font-bold mb-4">Create New Task</h2>
@@ -79,6 +84,21 @@ const TaskForm = () => {
           {errors.dueDate && <p className="text-red-500 text-sm">{errors.dueDate.message}</p>}
         </div>
 
+        <div className="mb-3">
+          <label className="block font-semibold mb-1">priority</label>
+          <select
+  {...register("priority", { required: "Priority is required" })}
+  className="w-full border border-gray-300 rounded p-2"
+>
+  <option value="" disabled hidden>Select priority</option>
+  <option value="High">High</option>
+  <option value="Medium">Medium</option>
+  <option value="Low">Low</option>
+</select>
+          {errors.priority && <p className="text-red-500 text-sm">{errors.priority.message}</p>}
+
+        </div>
+
         {/* Status */}
         <div className="mb-3">
           <label className="block font-semibold mb-1">Status</label>
@@ -101,7 +121,7 @@ const TaskForm = () => {
     className="w-full border border-gray-300 rounded p-2"
   >
     <option value="">Select a user</option>
-    {users.map((user) => (
+    {users && users?.map((user) => (
       <option key={user._id} value={user._id} className="flex justify-between" >
         {user.userName} {user.role === "Admin" ? "🛡️" : "👤"}
       </option>
@@ -122,6 +142,7 @@ const TaskForm = () => {
           Create Task
         </button>
       </form>
+    </div>
     </div>
   );
 };
